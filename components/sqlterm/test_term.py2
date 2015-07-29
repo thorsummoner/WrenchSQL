@@ -1,0 +1,57 @@
+#!/usr/bin/env python
+
+#--------------------------------
+
+# from gi.repository import Gtk, Vte
+# from gi.repository import GLib
+# import os
+
+# terminal     = Vte.Terminal()
+# terminal.fork_command_full(
+#             Vte.PtyFlags.DEFAULT,
+#                 os.environ['HOME'],
+#                     ["/bin/sh"],
+#                         [],
+#                             GLib.SpawnFlags.DO_NOT_REAP_CHILD,
+#                                 None,
+#                                     None,
+
+#         )
+
+# win = Gtk.Window()
+# win.connect('delete-event', Gtk.main_quit)
+# win.add(terminal)
+# win.show_all()
+
+# Gtk.main()
+#
+#--------------------------------
+#
+#!/usr/bin/env python
+
+from gi.repository import Gtk, Vte
+from gi.repository import GLib
+import os
+
+class MyTerm(Vte.Terminal):
+    def __init__(self, *args, **kwds):
+        super(MyTerm, self).__init__(*args, **kwds)
+        self.fork_command_full(
+            Vte.PtyFlags.DEFAULT,
+            os.environ['HOME'],
+            ["/bin/sh"],
+            [],
+            GLib.SpawnFlags.DO_NOT_REAP_CHILD,
+            None,
+            None,
+            )
+
+win = Gtk.Window()
+win.connect('delete-event', Gtk.main_quit)
+bigbox = Gtk.Box()
+win.add(bigbox)
+bigbox.add(MyTerm())
+bigbox.add(MyTerm())
+win.show_all()
+
+Gtk.main()

@@ -8,6 +8,7 @@ import os
 import signal
 
 from gi.repository import Gtk
+from gi.repository import Gdk
 
 class Window(Gtk.Window):
     """
@@ -16,20 +17,27 @@ class Window(Gtk.Window):
     # pylint: disable=no-member
 
     ROOT_WINDOW = 'window1'
+    GLADE_FILE = None
+    CSS_PROVIDER_FILE = None
+
 
     def __init__(self, *args):
         super(Window, self).__init__(*args)
 
         builder = Gtk.Builder()
-        builder.add_from_file(
-            os.path.join(
-                os.path.dirname(__file__),
-                self.GLADE_FILE
-            )
-        )
+        builder.add_from_file(self.GLADE_FILE)
         self.builder = builder
         self.window = self.builder.get_object(self.ROOT_WINDOW)
         self.builder.connect_signals(self.Handler(self))
+
+        self.cssprovider = Gtk.CssProvider()
+        self.cssprovider.load_from_path(self.CSS_PROVIDER_FILE)
+
+        Gtk.StyleContext.add_provider_for_screen(
+            Gdk.Screen.get_default(),
+            self.cssprovider,
+            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+        )
 
         self.window.show_all()
 

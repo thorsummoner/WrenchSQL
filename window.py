@@ -30,14 +30,15 @@ class Window(Gtk.Window):
         self.window = self.builder.get_object(self.ROOT_WINDOW)
         self.builder.connect_signals(self.Handler(self))
 
-        self.cssprovider = Gtk.CssProvider()
-        self.cssprovider.load_from_path(self.CSS_PROVIDER_FILE)
+        if self.CSS_PROVIDER_FILE is not None:
+            self.cssprovider = Gtk.CssProvider()
+            self.cssprovider.load_from_path(self.CSS_PROVIDER_FILE)
 
-        Gtk.StyleContext.add_provider_for_screen(
-            Gdk.Screen.get_default(),
-            self.cssprovider,
-            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
-        )
+            Gtk.StyleContext.add_provider_for_screen(
+                Gdk.Screen.get_default(),
+                self.cssprovider,
+                Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+            )
 
         self.window.show_all()
 

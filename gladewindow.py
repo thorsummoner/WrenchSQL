@@ -10,7 +10,7 @@ import signal
 from gi.repository import Gtk
 from gi.repository import Gdk
 
-class Window(Gtk.Window):
+class BaseWindow(Gtk.Window):
     """
         Gui application interface.
     """
@@ -22,7 +22,7 @@ class Window(Gtk.Window):
 
 
     def __init__(self, *args):
-        super(Window, self).__init__(*args)
+        super(BaseWindow, self).__init__(*args)
 
         builder = Gtk.Builder()
         builder.add_from_file(self.GLADE_FILE)
@@ -62,21 +62,21 @@ class Window(Gtk.Window):
             container.remove(child)
         container.add(new_child)
 
-    class BaseHandler(object):
+class BaseHandler(object):
+    """
+        Main Window Event Handler
+    """
+
+    def __init__(self, parent):
+        super(BaseHandler, self).__init__()
+        self.parent = parent
+        parent.window.connect("delete-event", self.on_delete_window)
+
+    @staticmethod
+    def on_delete_window(*args):
         """
-            Main Window Event Handler
+            Window Close Action
         """
+        Gtk.main_quit(*args)
 
-        def __init__(self, parent):
-            super(Window.BaseHandler, self).__init__()
-            self.parent = parent
-            parent.window.connect("delete-event", self.on_delete_window)
-
-        @staticmethod
-        def on_delete_window(*args):
-            """
-                Window Close Action
-            """
-            Gtk.main_quit(*args)
-
-    # pylint: enable=no-member
+# pylint: enable=no-member

@@ -1,20 +1,20 @@
 #!/usr/bin/env python
 
-import window
+import gladewindow
 import os
 
-class ExampleWindow(window.Window):
+class ExampleWindow(gladewindow.BaseWindow):
     """
         Gui application interface.
     """
 
-    GLADE_FILE = os.path.splitext(__file__)[0] + '.glade'
+    GLADE_FILE = os.path.join(os.path.dirname(__file__), '.glade')
 
     def __init__(self):
         super(ExampleWindow, self).__init__()
 
 
-    class Handler(window.Window.BaseHandler):
+    class Handler(gladewindow.BaseHandler):
         """
             Main Window Event Handler
         """

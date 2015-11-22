@@ -1,24 +1,6 @@
 #!/usr/bin/env python
 
-import wrench.gladewindow as gladewindow
-import os
-
-class WrenchSqlWindow(gladewindow.BaseWindow):
-    """
-        Gui application interface.
-    """
-
-    GLADE_FILE = os.path.join(os.path.dirname(__file__), '.glade')
-
-    def __init__(self):
-        super(WrenchSqlWindow, self).__init__()
-
-
-    class Handler(gladewindow.BaseHandler):
-        """
-            Main Window Event Handler
-        """
-
+import wrench.wrenchsqlwindow as wrenchsqlwindow
 
 if __name__ == '__main__':
-    WrenchSqlWindow().main()
+    wrenchsqlwindow.WrenchSqlWindow().main()

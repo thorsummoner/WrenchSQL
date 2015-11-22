@@ -3,7 +3,7 @@
 import gladewindow
 import os
 
-class ExampleWindow(gladewindow.BaseWindow):
+class WrenchSqlWindow(gladewindow.BaseWindow):
     """
         Gui application interface.
     """
@@ -11,7 +11,7 @@ class ExampleWindow(gladewindow.BaseWindow):
     GLADE_FILE = os.path.join(os.path.dirname(__file__), '.glade')
 
     def __init__(self):
-        super(ExampleWindow, self).__init__()
+        super(WrenchSqlWindow, self).__init__()
 
 
     class Handler(gladewindow.BaseHandler):
@@ -21,4 +21,4 @@ class ExampleWindow(gladewindow.BaseWindow):
 
 
 if __name__ == '__main__':
-    exit(ExampleWindow().main())
+    exit(WrenchSqlWindow().main())

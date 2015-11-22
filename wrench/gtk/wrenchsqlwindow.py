@@ -1,6 +1,6 @@
 
 import os
-import wrench.gladewindow as gladewindow
+import wrench.gtk.gladewindow as gladewindow
 
 class WrenchSqlWindow(gladewindow.BaseWindow):
     """

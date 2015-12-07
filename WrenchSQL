@@ -1,0 +1,6 @@
+#!/usr/bin/env python
+
+import wrench.gtk.wrenchsqlwindow as wrenchsqlwindow
+
+if __name__ == '__main__':
+    wrenchsqlwindow.WrenchSqlWindow().main()

@@ -9,6 +9,7 @@ Sql Client
   - [ ] Entire Buffer (Modifier Key)
   - [ ] Query Logging
 - [ ] Ability to quickly interrupt sql (Without prompting for new credentials)
+- [ ] Database table browsers with current user permissions icons
 
 MySQL Editor Features
 ----

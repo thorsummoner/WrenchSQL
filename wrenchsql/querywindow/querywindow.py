@@ -1,35 +1,61 @@
 from gi.repository import Gtk
 
-class QueryWindow(Gtk.Box):
+GTK_ICON_SIZE_MENU = Gtk.icon_size_from_name('gtk-menu')
+UNTITLED = 'untitled'
+SPACING = 5
+
+class QueryWindow(Gtk.Overlay):
     """
         Query builder interface
     """
     def __init__(self):
-        super(QueryWindow, self).__init__(orientation=Gtk.Orientation.VERTICAL)
+        super(QueryWindow, self).__init__()
 
-        self._init_textview()
+        self.box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        self.add(self.box)
+
+        self._init_notebook()
         self._init_wrapbox()
 
         self.textview.set_editable(True)
         self.textview.set_cursor_visible(True)
 
+    def _init_notebook(self):
+        self.notebook = Gtk.Notebook()
+        self.box.add(self.notebook)
+
+        self._init_textview()
+
     def _init_textview(self):
-        """ TODO Move to glade
+        """ TODO Move to Class
         """
+        label = Gtk.Label(UNTITLED)
+        fancy_label = Gtk.Box(spacing=SPACING)
+        fancy_label.add(Gtk.Image.new_from_icon_name('text-x-generic', GTK_ICON_SIZE_MENU))
+        fancy_label.add(label)
+        fancy_label.add(Gtk.Button.new_from_icon_name('gtk-close', GTK_ICON_SIZE_MENU))
+        fancy_label.show_all()
+
         scrolledwindow = Gtk.ScrolledWindow()
         scrolledwindow.set_hexpand(True)
         scrolledwindow.set_vexpand(True)
-        self.add(scrolledwindow)
+        scrolledwindow.set_shadow_type(Gtk.ShadowType.IN)
 
         self.textview = Gtk.TextView()
         self.textbuffer = self.textview.get_buffer()
         scrolledwindow.add(self.textview)
 
+        self.notebook.append_page_menu(
+            child=scrolledwindow,
+            tab_label=fancy_label,
+            menu_label=label,
+        )
+
     def _init_wrapbox(self):
         """ TODO Move to glade
         """
         wrap_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        self.add(wrap_box)
+        self.box.add(wrap_box)
 
         radio_wrapnone = Gtk.RadioButton.new_with_label_from_widget(None, "No Wrapping")
         radio_wrapnone.connect("toggled", self.on_wrap_toggled, Gtk.WrapMode.NONE)

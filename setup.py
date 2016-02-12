@@ -104,7 +104,7 @@ setup(
 
     entry_points={
         'gui_scripts': [
-            'wrenchsql-demo-querywindow = wrenchsql.querywindow:main',
+            'wrenchsql-demo-querywindow = wrenchsql.querywindow:demo',
         ],
     },
 )

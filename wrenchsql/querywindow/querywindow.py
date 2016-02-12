@@ -1,4 +1,5 @@
 from gi.repository import Gtk
+from gi.repository import Gdk
 
 GTK_ICON_SIZE_MENU = Gtk.icon_size_from_name('gtk-menu')
 UNTITLED = 'untitled'
@@ -20,8 +21,15 @@ class QueryWindow(Gtk.Overlay):
         self.textview.set_editable(True)
         self.textview.set_cursor_visible(True)
 
+    def _notebook_on_button(self, widget, event):
+        if event.type is Gdk.EventType._2BUTTON_PRESS:
+            print(event.type)
+
+        self._last_notebook_event = event
+
     def _init_notebook(self):
         self.notebook = Gtk.Notebook()
+        self.notebook.connect('button-press-event', self._notebook_on_button)
         self.box.add(self.notebook)
 
         self._init_textview()

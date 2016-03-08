@@ -1,5 +1,7 @@
 from gi.repository import Gtk
+from gi.repository import GtkSource
 from gi.repository import Gdk
+from gi.repository import GObject
 
 GTK_ICON_SIZE_MENU = Gtk.icon_size_from_name('gtk-menu')
 UNTITLED = 'untitled'
@@ -49,8 +51,32 @@ class QueryWindow(Gtk.Overlay):
         scrolledwindow.set_vexpand(True)
         scrolledwindow.set_shadow_type(Gtk.ShadowType.IN)
 
-        self.textview = Gtk.TextView()
-        self.textbuffer = self.textview.get_buffer()
+        self.textview = GtkSource.View()
+        if 'sourceview_options':
+            self.textview.set_show_line_numbers(True)
+            self.textview.set_show_line_marks(True)
+            self.textview.set_tab_width(4)
+            self.textview.set_auto_indent(True)
+            self.textview.set_insert_spaces_instead_of_tabs(True)
+            self.textview.set_show_right_margin(True)
+            self.textview.set_highlight_current_line(True)
+
+            # # someday
+            # self.textview.set_monospace(True)
+            from gi.repository import Pango
+            self.textview.override_font(
+                Pango.font_description_from_string('Monospace 10')
+            )
+
+
+        if 'source_language':
+            language_manager = GtkSource.LanguageManager()
+            lang_sql = language_manager.get_language('sql')
+
+            self.textbuffer = GtkSource.Buffer.new_with_language(lang_sql)
+
+        self.textview.set_buffer(self.textbuffer)
+
         scrolledwindow.add(self.textview)
 
         self.notebook.append_page_menu(

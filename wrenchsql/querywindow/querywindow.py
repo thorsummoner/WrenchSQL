@@ -46,6 +46,7 @@ class QueryWindow(Gtk.Overlay):
         fancy_label.show_all()
 
         scrolledwindow = Gtk.ScrolledWindow()
+        scrolledwindow.set_size_request(260, 130)
         scrolledwindow.set_hexpand(True)
         scrolledwindow.set_vexpand(True)
         scrolledwindow.set_shadow_type(Gtk.ShadowType.IN)
